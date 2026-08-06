@@ -3,36 +3,36 @@ from pathlib import Path
 p = Path('index.html')
 s = p.read_text(encoding='utf-8')
 
-if '<td>30.07.2026</td>' in s:
+if '<td>04.08.2026</td>' in s:
     raise SystemExit(0)
 
 
 def replace_once(text: str, old: str, new: str) -> str:
     if old not in text:
-        raise RuntimeError(f'Marker not found: {old[:120]}')
+        raise RuntimeError(f'Marker not found: {old[:140]}')
     return text.replace(old, new, 1)
 
 # Main season table
-last_row = "<tr class='type-base'><td>02.07.2026</td><td>База (набережная)</td><td>4.89</td><td>32:08</td><td>6:34</td><td>154/170</td><td>168</td><td>43</td><td>—</td><td>2.7/1.1</td></tr>"
-new_row = "<tr class='type-aerobic'><td>30.07.2026</td><td>Аэробная мощность (рельеф)</td><td>10.01</td><td>1:02:23</td><td>6:14</td><td>157/171</td><td>168</td><td>118</td><td>—</td><td>3.8/3.2</td></tr>"
+last_row = "<tr class='type-aerobic'><td>30.07.2026</td><td>Аэробная мощность (рельеф)</td><td>10.01</td><td>1:02:23</td><td>6:14</td><td>157/171</td><td>168</td><td>118</td><td>—</td><td>3.8/3.2</td></tr>"
+new_row = "<tr class='type-easy'><td>04.08.2026</td><td>Лёгкий бег (рельеф)</td><td>4.31</td><td>26:14</td><td>6:06</td><td>155/171</td><td>166</td><td>65</td><td>—</td><td>2.6/2.0</td></tr>"
 s = replace_once(s, last_row + "</tbody></table>", last_row + new_row + "</tbody></table>")
 
 # Coach note
 progress_marker = "</div></div></div></div><div class='section-title'>Прогресс ключевых показателей</div>"
 new_note = (
-    "<div class='note-card'><div class='note-header' style='background:#cce5ff'>"
-    "<strong>30.07.2026 — Аэробная мощность (рельеф)</strong>"
+    "<div class='note-card'><div class='note-header' style='background:#d4edda'>"
+    "<strong>04.08.2026 — Лёгкий бег (рельеф)</strong>"
     "<span class='meta'>Маршрут: Владивосток, рельеф &nbsp;|&nbsp; Борг: —</span></div>"
     "<div class='note-body'><div class='text'>"
-    "10 км по выраженному рельефу: набор 118 м, средний темп 6:14 при пульсе 157. "
-    "По сравнению с похожей тренировкой 18.06 темп улучшился на 16 сек/км при чуть большем наборе (+11 м), "
-    "но средний пульс вырос на 6 уд/мин и анаэробный ТЭ — до 3.2. Каденс 168 и время на земле 261 мс — техника стабильна. "
-    "ТН 230 (высокая). Пробежка выполнена на следующий день после силовой Б с выпадами и икрами, поэтому такое сочетание не повторять перед ключевым бегом. "
-    "Следующая похожая работа: те же 10 км без ускорения дистанции, удерживать пульс примерно до 155–158 и оценить ровность второй половины."
+    "Короткий аэробный бег между силовыми тренировками А (03.08) и Б (05.08). "
+    "По сравнению с похожей пробежкой 02.07 темп улучшился с 6:34 до 6:06 мин/км при почти том же среднем пульсе (154 → 155), "
+    "несмотря на больший набор высоты (43 → 65 м). Это хороший признак улучшения аэробной экономичности. "
+    "Каденс немного снизился с 168 до 166, но остаётся стабильным; среднее время контакта с землёй — 264 мс. "
+    "ТЭ 2.6/2.0 указывает на умеренную нагрузку: это не восстановительная прогулка, поэтому следующую пробежку проводить легко, без одновременного увеличения дистанции и скорости."
     "</div><div class='stats'>"
-    "Дист: <span>10.01 км</span> &nbsp;|&nbsp; Время: <span>1:02:23</span> &nbsp;|&nbsp; Темп: <span>6:14</span><br>"
-    "Пульс: <span>157/171</span> &nbsp;|&nbsp; Каденс: <span>168</span> &nbsp;|&nbsp; Набор: <span>118 м</span><br>"
-    "ТЭ: <span>3.8 / 3.2</span> &nbsp;|&nbsp; Лучший темп: <span>5:29</span> &nbsp;|&nbsp; Мощность: <span>230 Вт</span> &nbsp;|&nbsp; Время на земле: <span>261 мс</span> &nbsp;|&nbsp; ТН: <span>230</span>"
+    "Дист: <span>4.31 км</span> &nbsp;|&nbsp; Время: <span>26:14</span> &nbsp;|&nbsp; Темп: <span>6:06</span><br>"
+    "Пульс: <span>155/171</span> &nbsp;|&nbsp; Каденс: <span>166</span> &nbsp;|&nbsp; Набор: <span>65 м</span><br>"
+    "ТЭ: <span>2.6 / 2.0</span> &nbsp;|&nbsp; Лучший темп: <span>5:46</span> &nbsp;|&nbsp; Приведённый темп: <span>5:54</span> &nbsp;|&nbsp; Длина шага: <span>99 см</span> &nbsp;|&nbsp; Время на земле: <span>264 мс</span>"
     "</div></div></div>"
 )
 s = replace_once(
@@ -42,14 +42,14 @@ s = replace_once(
 )
 
 # Progress table
-s = replace_once(s, "<th>28.06</th><th>02.07</th><th>Динамика</th>", "<th>28.06</th><th>02.07</th><th>30.07</th><th>Динамика</th>")
-s = replace_once(s, "<td class='indicator'>Рост до 168 ✓</td>", "<td><strong>168</strong></td><td class='indicator'>Стабильно 168 ✓</td>")
-s = replace_once(s, "<td class='indicator'>Стабильно ✓</td>", "<td>157</td><td class='indicator'>Рабочая интенсивность</td>")
-s = replace_once(s, "<td class='indicator'>Рекорд 18.00 км ✓</td>", "<td>10.01</td><td class='indicator'>10 км на рельефе ✓</td>")
-s = replace_once(s, "<td class='indicator'>Поддерживающий ✓</td>", "<td><strong>3.8</strong></td><td class='indicator'>Развивающий стимул ✓</td>")
-s = replace_once(s, "<td class='indicator'>Лёгкая база ✓</td>", "<td><strong>6:14</strong></td><td class='indicator'>Быстрее 18.06 на 16 сек/км ✓</td>")
-s = replace_once(s, "<td class='indicator'>Рекорд 4:24 ✓</td>", "<td>5:29</td><td class='indicator'>Стабильно на рельефе</td>")
-s = replace_once(s, "<td class='indicator'>266 мс легко ✓</td>", "<td><strong>261</strong></td><td class='indicator'>Экономичность улучшилась ✓</td>")
-s = replace_once(s, "<td class='indicator'>Рекорд 183 м ✓</td>", "<td>118</td><td class='indicator'>Высокий рельеф ✓</td>")
+s = replace_once(s, "<th>28.06</th><th>02.07</th><th>30.07</th><th>Динамика</th>", "<th>28.06</th><th>02.07</th><th>30.07</th><th>04.08</th><th>Динамика</th>")
+s = replace_once(s, "<td><strong>168</strong></td><td class='indicator'>Стабильно 168 ✓</td>", "<td><strong>168</strong></td><td>166</td><td class='indicator'>Стабильно 166–168 ✓</td>")
+s = replace_once(s, "<td>157</td><td class='indicator'>Рабочая интенсивность</td>", "<td>157</td><td>155</td><td class='indicator'>Темп быстрее при том же пульсе ✓</td>")
+s = replace_once(s, "<td>10.01</td><td class='indicator'>10 км на рельефе ✓</td>", "<td>10.01</td><td>4.31</td><td class='indicator'>Короткая аэробная работа</td>")
+s = replace_once(s, "<td><strong>3.8</strong></td><td class='indicator'>Развивающий стимул ✓</td>", "<td><strong>3.8</strong></td><td>2.6</td><td class='indicator'>Умеренный стимул</td>")
+s = replace_once(s, "<td><strong>6:14</strong></td><td class='indicator'>Быстрее 18.06 на 16 сек/км ✓</td>", "<td><strong>6:14</strong></td><td><strong>6:06</strong></td><td class='indicator'>02.07 быстрее на 28 сек/км при том же пульсе ✓</td>")
+s = replace_once(s, "<td>5:29</td><td class='indicator'>Стабильно на рельефе</td>", "<td>5:29</td><td>5:46</td><td class='indicator'>Контролируемо без рывков</td>")
+s = replace_once(s, "<td><strong>261</strong></td><td class='indicator'>Экономичность улучшилась ✓</td>", "<td><strong>261</strong></td><td>264</td><td class='indicator'>Стабильно 261–264 мс</td>")
+s = replace_once(s, "<td>118</td><td class='indicator'>Высокий рельеф ✓</td>", "<td>118</td><td>65</td><td class='indicator'>Рельефная работа ✓</td>")
 
 p.write_text(s, encoding='utf-8')
