@@ -9,6 +9,8 @@ on:
 permissions:
   contents: write
 
+# Touching this workflow file is also used to force a fresh GitHub Pages deployment
+# when a legacy Pages deployment becomes stuck or cancelled.
 jobs:
   update:
     runs-on: ubuntu-latest
