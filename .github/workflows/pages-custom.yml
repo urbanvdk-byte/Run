@@ -49,4 +49,4 @@ jobs:
           timeout: '1800000'
           reporting_interval: '5000'
 
-# Manual trigger after switching Pages source to GitHub Actions on 2026-08-07.
+# Publish diary update for run dated 2026-08-04.
